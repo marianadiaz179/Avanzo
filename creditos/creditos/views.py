@@ -10,7 +10,7 @@ MONGO_CLIENT="mongodb://monitoring_user:isis2503@10.128.0.6:27017"
 #environ.setdefault('DJANGO_SETTINGS_MODULE', 'monitoring.settings')
 #django.setup()
 
-from creditos.services.services_creditos import send_email
+#from creditos.services.services_creditos import send_email
 
 
 def main(queue='creditos'):
