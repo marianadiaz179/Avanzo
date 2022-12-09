@@ -4,18 +4,20 @@ from sys import path
 from os import environ
 import django
 from datetime import datetime
+MONGO_CLIENT="mongodb://monitoring_user:isis2503@10.128.0.6:27017"
 
 path.append('monitoring/settings.py')
 environ.setdefault('DJANGO_SETTINGS_MODULE', 'monitoring.settings')
 django.setup()
 
-from solicitudes.services.services_solicitud import send_email
+from creditos.services.services_creditos import send_email
 
 
 def main(queue='creditos'):
   rabbit_host = '10.128.0.3'
   rabbit_user = 'monitoring_user'
   rabbit_password = 'isis2503'
+  client = MongoClient(MONGO_CLIENT)
   db = client.monitoring_db
   clientes = db['clientes']
 
