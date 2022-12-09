@@ -1,4 +1,3 @@
-from .models import Credito
 from django.http import JsonResponse
 from pymongo import MongoClient
 import datetime
