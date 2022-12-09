@@ -1,8 +1,8 @@
 from django.db import models
 
-class Credito(models.Model):
-    infoAnalisis =  models.CharField(max_length=50)
-    solicitud = models.FloatField(null=True, blank=True, default=None)
+class Solicitud(models.Model):
+    idSolicitud = models.FloatField(null=True, blank=True, default=None)
+    documento =  models.CharField(max_length=50)
     cliente = models.IntegerField(null=False, default=None)
 
     def __str__(self):

@@ -1,67 +1,50 @@
+from django.http import JsonResponse
 from pymongo import MongoClient
 import pika
-from sys import path
-from os import environ
-import django
-from datetime import datetime
-
-path.append('monitoring/settings.py')
-environ.setdefault('DJANGO_SETTINGS_MODULE', 'monitoring.settings')
-django.setup()
-
-from solicitudes.services.services_solicitud import send_email
+from django.conf import settings
 
 
-def main(queue='creditos'):
-  rabbit_host = '10.128.0.3'
-  rabbit_user = 'monitoring_user'
-  rabbit_password = 'isis2503'
-  db = client.monitoring_db
-  clientes = db['clientes']
+# Create your views here.
 
-  connection = pika.BlockingConnection(pika.ConnectionParameters(host=rabbit_host,credentials=pika.PlainCredentials(rabbit_user, rabbit_password)))
-  channel = connection.channel()
-  channel.queue_declare(queue=queue)
-  
-  def callback(ch, method, properties, body):
-    documentos = body.decode()
-    respuesta = "No es aprobado"
-    documentos = documentos.split(";")
-    clientes.update({'estado':'Rechazado'},{ '$set': {'cedula':documentos[2]}})
-    fecha_mes = (datetime.strptime(documentos[5], '%d/%m/%Y')).month not in range(9,11)
+def analisisCredito():
+    rabbit_host = '10.128.0.3'
+    rabbit_user = 'monitoring_user'
+    rabbit_password = 'isis2503'
+    client = MongoClient(settings.MONGO_CLI)
+    db = client.monitoring_db
+    clientes = db['clientes']
 
-    if documentos[3] == "Apple":
-      if int(documentos[1]) >= 2000000:
-        if int(documentos[4]) >= 30:
-          if fecha_mes == True:
-            respuesta = "Aprobado"
-            clientes.update({'estado':'Aprobado'},{ '$set' : {'cedula':documentos[2]}})
-            
+    connection = pika.BlockingConnection(
+            pika.ConnectionParameters(host=rabbit_host, 
+            credentials=pika.PlainCredentials(rabbit_user, rabbit_password)))
 
-    elif documentos[3] == "Facebook":
-      if int(documentos[1]) >= 3000000:
-        if int(documentos[4]) >= 30:
-          if fecha_mes == True:
-            respuesta = "Aprobado"
-            clientes.update({'estado':'Aprobado'},{ '$set' : {'cedula':documentos[2]}})
+    channel = connection.channel()
 
-    elif documentos[3] == "Microsoft":
-      if int(documentos[1]) >= 7000000:
-        if int(documentos[4]) >= 30:
-          if fecha_mes == True:
-            respuesta = "Aprobado"
-            clientes.update({'estado':'Aprobado'},{ '$set' : {'cedula':documentos[2]}})
+    channel.queue_declare(queue='creditos')
+    doc1 = 'Mario Castillo;2100000;1000612379;Apple;35;01/01/2022'
+    data1 = {'nombre': 'Mario Castillo' , 'salario' : '2100000', 'cedula': '1000612379', 
+             'empresa': 'Apple', 'edad' :'35', 'fechaContarto': '01/01/2022', 'estado': 'pendiente'}
+    clientes.insert(data1)
+    cliente1 = clientes.find({'cedula': '1000612379'})
+    print("Se ha agregado el cliente : ")
+    print(cliente1)
+    
+    doc2 = 'Laura Torres;5400000;1000185263;Facebook;31;02/09/2021'
+    data2 = {'nombre': 'Laura Torres' , 'salario' : '5400000', 'cedula': '1000185263', 
+             'empresa': 'Facebook', 'edad' :'31', 'fechaContarto': '02/09/2021', 'estado': 'pendiente'}
+    clientes.insert(data2)
+    cliente2 = clientes.find({'cedula': '1000185263'})
+    print("Se ha agregado el cliente : ")
+    print(cliente2)
+    
+    infoDocumentos=[doc1,doc2]
 
-    print(respuesta)
-    print("Se ha actualizado el estado del cliente")
-    cliente = clientes.find({'cedula': documentos[2]})
-    send_email(respuesta)
+    print('Mandando información de los documentos de los clientes. To exit press CTRL+C')
 
-  channel.basic_consume(queue='creditos', on_message_callback=callback, auto_ack=True)
-  print(' [*] Waiting for messages. To exit press CTRL+C')
-  channel.start_consuming()
-  
+    for i in infoDocumentos:
+        channel.basic_publish(exchange='', routing_key='creditos', body=i)
+        print("Se ha enviado la información de los documentos "+ i)
 
+    connection.close()
 
-if __name__ == '__main__':
-    main(queue='creditos')
+analisisCredito()
