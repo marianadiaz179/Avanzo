@@ -66,11 +66,12 @@ def main(queue='creditos'):
     print("El credito de " + nombre + " ha sido: " + respuesta)
     print("Se ha actualizado el estado del cliente")
     print(infoCliente)
-    send_email(nombre + "su credito ha sido " + respuesta)
-    print("-----------------")
+    send_email(nombre + " su credito ha sido " + respuesta)
+    
     
     final = time.time()
     print("El tiempo de ejecución fue: " + str(final-inicial))
+    print("-----------------")
 
   channel.basic_consume(queue='creditos', on_message_callback=callback, auto_ack=True)
   print(' [*] Waiting for messages. To exit press CTRL+C')
