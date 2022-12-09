@@ -10,7 +10,7 @@ path.append('monitoring/settings.py')
 environ.setdefault('DJANGO_SETTINGS_MODULE', 'monitoring.settings')
 django.setup()
 
-from creditos.creditos.services.services_creditos import send_email
+from creditos.services.services_creditos import send_email
 
 
 def main(queue='creditos'):
