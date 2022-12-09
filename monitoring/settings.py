@@ -37,21 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'solicitud',
-    'solicitanteCredito',
-    'administrativo',
-    'cto',
-    'avanzo',
-    'cuenta',
-    'descuento',
-    'documento',
-    'empleado',
-    'empresaAfiliada',
-    'lineamiento',
-    'novedad',
-    'pago',
-    'usuario',
-    'social_django',
+    'creditos'
     
 ]
 
