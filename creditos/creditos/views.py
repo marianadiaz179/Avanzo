@@ -6,9 +6,9 @@ import django
 from datetime import datetime
 MONGO_CLIENT="mongodb://monitoring_user:isis2503@10.128.0.6:27017"
 
-path.append('avanzo/creditos/monitoring/settings.py')
-environ.setdefault('DJANGO_SETTINGS_MODULE', 'monitoring.settings')
-django.setup()
+#path.append('avanzo/creditos/monitoring/settings.py')
+#environ.setdefault('DJANGO_SETTINGS_MODULE', 'monitoring.settings')
+#django.setup()
 
 from creditos.services.services_creditos import send_email
 
@@ -57,7 +57,7 @@ def main(queue='creditos'):
     print(respuesta)
     print("Se ha actualizado el estado del cliente")
     cliente = clientes.find({'cedula': documentos[2]})
-    send_email(respuesta)
+    #send_email(respuesta)
 
   channel.basic_consume(queue='creditos', on_message_callback=callback, auto_ack=True)
   print(' [*] Waiting for messages. To exit press CTRL+C')
