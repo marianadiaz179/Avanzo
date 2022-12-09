@@ -16,7 +16,7 @@ from solicitudes.services.services_solicitud import send_email
 
 
 def main(queue='creditos'):
-  rabbit_host = '10.128.0.6'
+  rabbit_host = '10.128.0.3'
   rabbit_user = 'monitoring_user'
   rabbit_password = 'isis2503'
   db = client.monitoring_db

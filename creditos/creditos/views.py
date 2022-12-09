@@ -14,7 +14,7 @@ import pika
 
 
 def analisisCredito():
-    rabbit_host = '10.128.0.6'
+    rabbit_host = '10.128.0.3'
     rabbit_user = 'monitoring_user'
     rabbit_password = 'isis2503'
     client = MongoClient(settings.MONGO_CLI)
