@@ -5,6 +5,7 @@ from os import environ
 import django
 from datetime import datetime
 import time
+import random
 MONGO_CLIENT="mongodb://monitoring_user:isis2503@10.128.0.6:27017"
 
 path.append('monitoring/settings.py')
@@ -61,11 +62,11 @@ def main(queue='creditos'):
           infoCliente = 'nombre: ' + dto['nombre'] + ", " + 'cedula: ' + dto['cedula'] + ", empresa: " + dto['empresa'] + ", estado: " + dto['estado']
           nombre = dto['nombre']
 
-    time.sleep(3)
+    time.sleep(random.randint(1,4))
     print("El credito de " + nombre + " ha sido: " + respuesta)
     print("Se ha actualizado el estado del cliente")
     print(infoCliente)
-    #send_email(respuesta)
+    send_email(nombre + "su credito ha sido " + respuesta)
     print("-----------------")
     
     final = time.time()
