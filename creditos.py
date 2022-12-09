@@ -29,7 +29,7 @@ def main(queue='creditos'):
     documentos = body.decode()
     respuesta = "No es aprobado"
     documentos = documentos.split(";")
-    clientes.update({'estado':'Rechazado'},{ "$set" {'cedula':documentos[2]}})
+    clientes.update({'estado':'Rechazado'},{ "$set": {'cedula':documentos[2]}})
     fecha_mes = (datetime.strptime(documentos[5], '%d/%m/%Y')).month not in range(9,11)
 
     if documentos[3] == "Apple":
