@@ -58,8 +58,7 @@ def main(queue='creditos'):
             
     cliente = clientes.find({'cedula': documentos[2]})
     for dto in cliente:
-          infoCliente = 'nombre: ' + dto['nombre'] + ", " + 'cedula: ' + dto['cedula'] + ", empresa: " 
-          + dto['empresa'] + ", estado: " + dto['estado']
+          infoCliente = 'nombre: ' + dto['nombre'] + ", " + 'cedula: ' + dto['cedula'] + ", empresa: " + dto['empresa'] + ", estado: " + dto['estado']
 
     time.sleep(3)
     print("El credito de " + cliente['nombre'] + " ha sido: " + respuesta)

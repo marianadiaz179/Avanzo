@@ -31,9 +31,7 @@ def analisisCredito():
           infoCliente1 = 'nombre: ' + dto['nombre'] + ", " + 'cedula: ' + dto['cedula'] + ", empresa: " + dto['empresa'] + ", estado: " + dto['estado']
     print("Se ha agregado el cliente : ")
     print(infoCliente1)
-    
     print("-----------------")
-    
     doc2 = 'Laura Torres;5400000;1000185263;Facebook;31;02/09/2021'
     data2 = {'nombre': 'Laura Torres' , 'salario' : '5400000', 'cedula': '1000185263', 
              'empresa': 'Facebook', 'edad' :'31', 'fechaContarto': '02/09/2021', 'estado': 'pendiente'}
@@ -44,6 +42,7 @@ def analisisCredito():
           infoCliente2 = 'nombre: ' + dto['nombre'] + ", " + 'cedula: ' + dto['cedula'] + ", empresa: " + dto['empresa'] + ", estado: " + dto['estado']
     print("Se ha agregado el cliente : ")
     print(infoCliente2)
+    print("-----------------")
     
     infoDocumentos=[doc1,doc2]
 
@@ -52,6 +51,7 @@ def analisisCredito():
     for i in infoDocumentos:
         channel.basic_publish(exchange='', routing_key='creditos', body=i)
         print("Se ha enviado la información de los documentos "+ i)
+        print("-----------------")
 
     connection.close()
 
