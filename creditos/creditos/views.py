@@ -6,7 +6,7 @@ import django
 from datetime import datetime
 MONGO_CLIENT="mongodb://monitoring_user:isis2503@10.128.0.6:27017"
 
-path.append('monitoring/settings.py')
+path.append('avanzo/creditos/monitoring/settings.py')
 environ.setdefault('DJANGO_SETTINGS_MODULE', 'monitoring.settings')
 django.setup()
 
