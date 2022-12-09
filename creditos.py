@@ -4,6 +4,7 @@ from sys import path
 from os import environ
 import django
 from datetime import datetime
+import time
 MONGO_CLIENT="mongodb://monitoring_user:isis2503@10.128.0.6:27017"
 
 path.append('monitoring/settings.py')
@@ -26,6 +27,7 @@ def main(queue='creditos'):
   channel.queue_declare(queue=queue)
   
   def callback(ch, method, properties, body):
+    inicial = time.time()
     documentos = body.decode()
     respuesta = "No es aprobado"
     documentos = documentos.split(";")
@@ -61,6 +63,9 @@ def main(queue='creditos'):
           infoCliente = 'nombre: ' + dto['nombre'] + ", " + 'cedula: ' + dto['cedula'] + ", empresa: " + dto['empresa'] + ", estado: " + dto['estado']
     print(infoCliente)
     #send_email(respuesta)
+    
+    final = time.time()
+    print("El tiempo de ejecución fue: " + str(final-inicial))
 
   channel.basic_consume(queue='creditos', on_message_callback=callback, auto_ack=True)
   print(' [*] Waiting for messages. To exit press CTRL+C')
