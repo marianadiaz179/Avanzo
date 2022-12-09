@@ -29,7 +29,7 @@ def main(queue='creditos'):
   def callback(ch, method, properties, body):
     inicial = time.time()
     documentos = body.decode()
-    respuesta = "No es aprobado"
+    respuesta = "Rechazado"
     documentos = documentos.split(";")
     clientes.update_many({'cedula':documentos[2]},{ "$set": {'estado': 'Rechazado'}})
     fecha_mes = (datetime.strptime(documentos[5], '%d/%m/%Y')).month not in range(9,11)
@@ -55,14 +55,18 @@ def main(queue='creditos'):
           if fecha_mes == True:
             respuesta = "Aprobado"
             clientes.update_many({'cedula':documentos[2]},{ "$set": {'estado': 'Aprobado'}})
-
-    print(respuesta)
-    print("Se ha actualizado el estado del cliente")
+            
     cliente = clientes.find({'cedula': documentos[2]})
     for dto in cliente:
-          infoCliente = 'nombre: ' + dto['nombre'] + ", " + 'cedula: ' + dto['cedula'] + ", empresa: " + dto['empresa'] + ", estado: " + dto['estado']
+          infoCliente = 'nombre: ' + dto['nombre'] + ", " + 'cedula: ' + dto['cedula'] + ", empresa: " 
+          + dto['empresa'] + ", estado: " + dto['estado']
+
+    time.sleep(3)
+    print("El credito de " + cliente['nombre'] + " ha sido: " + respuesta)
+    print("Se ha actualizado el estado del cliente")
     print(infoCliente)
     #send_email(respuesta)
+    print("-----------------")
     
     final = time.time()
     print("El tiempo de ejecución fue: " + str(final-inicial))

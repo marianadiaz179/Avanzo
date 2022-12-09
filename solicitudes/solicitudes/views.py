@@ -32,6 +32,8 @@ def analisisCredito():
     print("Se ha agregado el cliente : ")
     print(infoCliente1)
     
+    print("-----------------")
+    
     doc2 = 'Laura Torres;5400000;1000185263;Facebook;31;02/09/2021'
     data2 = {'nombre': 'Laura Torres' , 'salario' : '5400000', 'cedula': '1000185263', 
              'empresa': 'Facebook', 'edad' :'31', 'fechaContarto': '02/09/2021', 'estado': 'pendiente'}
