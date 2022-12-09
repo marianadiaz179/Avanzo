@@ -1,14 +1,6 @@
-from django.http import JsonResponse
+
 from pymongo import MongoClient
-import datetime
-from django.shortcuts import render, redirect
-from django.contrib import messages
-from django.http import HttpResponse
-from django.http import JsonResponse
-from django.urls import reverse
 from django.conf import settings
-import requests
-import json
 import pika
 
 

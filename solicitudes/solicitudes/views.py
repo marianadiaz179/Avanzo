@@ -1,7 +1,4 @@
-
-from django.conf import settings
-import requests
-import json
+from pymongo import MongoClient
 import pika
 from sys import path
 from os import environ
