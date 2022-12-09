@@ -29,7 +29,7 @@ def main(queue='creditos'):
     documentos = body.decode()
     respuesta = "No es aprobado"
     documentos = documentos.split(";")
-    clientes.update_many({'estado':'Rechazado'},{ "$set": {'cedula':documentos[2]}})
+    clientes.update_many({'cedula':documentos[2]},{ "$set": {'estado': 'Rechazado'}})
     fecha_mes = (datetime.strptime(documentos[5], '%d/%m/%Y')).month not in range(9,11)
 
     if documentos[3] == "Apple":
@@ -37,7 +37,7 @@ def main(queue='creditos'):
         if int(documentos[4]) >= 30:
           if fecha_mes == True:
             respuesta = "Aprobado"
-            clientes.update_many({'estado':'Aprobado'},{"$set" : {'cedula':documentos[2]}})
+            clientes.update_many({'cedula':documentos[2]},{ "$set": {'estado': 'Aprobado'}})
             
 
     elif documentos[3] == "Facebook":
@@ -45,14 +45,14 @@ def main(queue='creditos'):
         if int(documentos[4]) >= 30:
           if fecha_mes == True:
             respuesta = "Aprobado"
-            clientes.update_many({'estado':'Aprobado'},{ "$set" : {'cedula':documentos[2]}})
+            clientes.update_many({'cedula':documentos[2]},{ "$set": {'estado': 'Aprobado'}})
 
     elif documentos[3] == "Microsoft":
       if int(documentos[1]) >= 7000000:
         if int(documentos[4]) >= 30:
           if fecha_mes == True:
             respuesta = "Aprobado"
-            clientes.update_many({'estado':'Aprobado'},{ "$set" : {'cedula':documentos[2]}})
+            clientes.update_many({'cedula':documentos[2]},{ "$set": {'estado': 'Aprobado'}})
 
     print(respuesta)
     print("Se ha actualizado el estado del cliente")
