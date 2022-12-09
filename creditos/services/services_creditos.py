@@ -5,5 +5,5 @@ from django.core.mail import send_mail
 def send_email(mensaje:str):
     subject = 'Estado de solicitud de crédito'
     message = mensaje
-    recepient = "m.diaza2@uniandes.edu.co"
+    recepient = "pruebas_arquisoft@outlook.com"
     send_mail(subject, message, EMAIL_HOST_USER, [recepient])

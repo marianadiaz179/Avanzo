@@ -59,7 +59,7 @@ def main(queue='creditos'):
     cliente = clientes.find({'cedula': documentos[2]})
     for dto in cliente:
           infoCliente = 'nombre: ' + dto['nombre'] + ", " + 'cedula: ' + dto['cedula'] + ", empresa: " + dto['empresa'] + ", estado: " + dto['estado']
-    print("infoCliente")
+    print(infoCliente)
     send_email(respuesta)
 
   channel.basic_consume(queue='creditos', on_message_callback=callback, auto_ack=True)
