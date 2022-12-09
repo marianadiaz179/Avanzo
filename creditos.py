@@ -29,7 +29,7 @@ def main(queue='creditos'):
     documentos = body.decode()
     respuesta = "No es aprobado"
     documentos = documentos.split(";")
-    clientes.update({'estado':'Rechazado'},{ "$set": {'cedula':documentos[2]}})
+    clientes.update_many({'estado':'Rechazado'},{ "$set": {'cedula':documentos[2]}})
     fecha_mes = (datetime.strptime(documentos[5], '%d/%m/%Y')).month not in range(9,11)
 
     if documentos[3] == "Apple":
@@ -37,7 +37,7 @@ def main(queue='creditos'):
         if int(documentos[4]) >= 30:
           if fecha_mes == True:
             respuesta = "Aprobado"
-            clientes.update({'estado':'Aprobado'},{"$set" : {'cedula':documentos[2]}})
+            clientes.update_many({'estado':'Aprobado'},{"$set" : {'cedula':documentos[2]}})
             
 
     elif documentos[3] == "Facebook":
@@ -45,14 +45,14 @@ def main(queue='creditos'):
         if int(documentos[4]) >= 30:
           if fecha_mes == True:
             respuesta = "Aprobado"
-            clientes.update({'estado':'Aprobado'},{ "$set" : {'cedula':documentos[2]}})
+            clientes.update_many({'estado':'Aprobado'},{ "$set" : {'cedula':documentos[2]}})
 
     elif documentos[3] == "Microsoft":
       if int(documentos[1]) >= 7000000:
         if int(documentos[4]) >= 30:
           if fecha_mes == True:
             respuesta = "Aprobado"
-            clientes.update({'estado':'Aprobado'},{ "$set" : {'cedula':documentos[2]}})
+            clientes.update_many({'estado':'Aprobado'},{ "$set" : {'cedula':documentos[2]}})
 
     print(respuesta)
     print("Se ha actualizado el estado del cliente")
@@ -60,7 +60,7 @@ def main(queue='creditos'):
     for dto in cliente:
           infoCliente = 'nombre: ' + dto['nombre'] + ", " + 'cedula: ' + dto['cedula'] + ", empresa: " + dto['empresa'] + ", estado: " + dto['estado']
     print(infoCliente)
-    send_email(respuesta)
+    #send_email(respuesta)
 
   channel.basic_consume(queue='creditos', on_message_callback=callback, auto_ack=True)
   print(' [*] Waiting for messages. To exit press CTRL+C')
