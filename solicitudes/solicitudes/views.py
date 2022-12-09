@@ -24,6 +24,7 @@ def analisisCredito():
     doc1 = 'Mario Castillo;2100000;1000612379;Apple;35;01/01/2022'
     data1 = {'nombre': 'Mario Castillo' , 'salario' : '2100000', 'cedula': '1000612379', 
              'empresa': 'Apple', 'edad' :'35', 'fechaContarto': '01/01/2022', 'estado': 'pendiente'}
+    clientes.remove({'cedula': data1['cedula']})
     clientes.insert(data1)
     cliente1 = clientes.find({'cedula': '1000612379'})
     for dto in cliente1:
@@ -34,6 +35,7 @@ def analisisCredito():
     doc2 = 'Laura Torres;5400000;1000185263;Facebook;31;02/09/2021'
     data2 = {'nombre': 'Laura Torres' , 'salario' : '5400000', 'cedula': '1000185263', 
              'empresa': 'Facebook', 'edad' :'31', 'fechaContarto': '02/09/2021', 'estado': 'pendiente'}
+    clientes.remove({'cedula': data2['cedula']})
     clientes.insert(data2)
     cliente2 = clientes.find({'cedula': '1000185263'})
     for dto in cliente2:
